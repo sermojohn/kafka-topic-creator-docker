@@ -7,26 +7,10 @@ set -x
 # KAFKA_PORT: Kafka exposed port
 # CREATE_TOPICS: List of space separated topics to create in the form of topic_name:partitions:replication_factor:cleanup_policy
 
+# Set a trap for SIGINT and SIGTERM signals
+trap "echo 'interrupted...' && exit 1" SIGTERM SIGINT
+
 kaf="./kaf"
-
-# download_kaf downloads kaf from github
-# function download_kaf() {
-#     if [[ -f $kaf ]]; then
-#         return 0
-#     fi
-
-#     VERSION=0.1.44
-#     OS=Linux
-#     ARCH=x86_64
-#     case $(uname) in
-#     Darwin)
-#         OS=Darwin
-#         ;;
-#     esac
-
-#     curl -Ls https://github.com/birdayz/kaf/releases/download/v${VERSION}/kaf_${VERSION}_${OS}_${ARCH}.tar.gz --output - | gunzip -c | tar xopf - -O kaf >$kaf && chmod +x $kaf
-#     return 0
-# }
 
 # wait_for_kafka polls until kafka is running
 function wait_for_kafka() {
@@ -67,6 +51,5 @@ function create_topics() {
     done
 }
 
-download_kaf
 wait_for_kafka
 create_topics
