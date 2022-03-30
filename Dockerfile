@@ -1,5 +1,7 @@
 FROM bash:3.1.23
 
+LABEL org.opencontainers.image.source https://github.com/sermojohn/kafka-topic-creator-docker
+
 ARG KAF_VERSION=0.1.44
 ARG TARGETPLATFORM
 
